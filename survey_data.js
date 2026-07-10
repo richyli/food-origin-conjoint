@@ -9,132 +9,6 @@ window.SURVEY_DATA = {
       "task": 1,
       "A": {
         "origin": "印度",
-        "made": "台灣",
-        "packed": "未標示",
-        "brand": "未標示",
-        "price": 119,
-        "name": "田庄花生糖",
-        "pid": "TWP01"
-      },
-      "B": {
-        "origin": "日本",
-        "made": "台灣",
-        "packed": "中國",
-        "brand": "台灣",
-        "price": 119,
-        "name": "田庄花生糖",
-        "pid": "TWP02"
-      }
-    },
-    {
-      "task": 2,
-      "A": {
-        "origin": "台灣",
-        "made": "台灣",
-        "packed": "日本",
-        "brand": "台灣",
-        "price": 199,
-        "name": "田庄花生糖",
-        "pid": "TWP03"
-      },
-      "B": {
-        "origin": "台灣",
-        "made": "台灣",
-        "packed": "台灣",
-        "brand": "未標示",
-        "price": 119,
-        "name": "田庄花生糖",
-        "pid": "TWP04"
-      }
-    },
-    {
-      "task": 3,
-      "A": {
-        "origin": "日本",
-        "made": "台灣",
-        "packed": "台灣",
-        "brand": "台灣",
-        "price": 159,
-        "name": "田庄花生糖",
-        "pid": "TWP05"
-      },
-      "B": {
-        "origin": "印度",
-        "made": "未標示",
-        "packed": "台灣",
-        "brand": "台灣",
-        "price": 159,
-        "name": "田庄花生糖",
-        "pid": "TWP06"
-      }
-    },
-    {
-      "task": 4,
-      "A": {
-        "origin": "未標示",
-        "made": "日本",
-        "packed": "台灣",
-        "brand": "台灣",
-        "price": 119,
-        "name": "田庄花生糖",
-        "pid": "TWP07"
-      },
-      "B": {
-        "origin": "未標示",
-        "made": "中國",
-        "packed": "台灣",
-        "brand": "未標示",
-        "price": 199,
-        "name": "田庄花生糖",
-        "pid": "TWP08"
-      }
-    },
-    {
-      "task": 5,
-      "A": {
-        "origin": "日本",
-        "made": "印度",
-        "packed": "台灣",
-        "brand": "未標示",
-        "price": 79,
-        "name": "田庄花生糖",
-        "pid": "TWP09"
-      },
-      "B": {
-        "origin": "台灣",
-        "made": "中國",
-        "packed": "台灣",
-        "brand": "台灣",
-        "price": 79,
-        "name": "田庄花生糖",
-        "pid": "TWP10"
-      }
-    },
-    {
-      "task": 6,
-      "A": {
-        "origin": "日本",
-        "made": "台灣",
-        "packed": "印度",
-        "brand": "未標示",
-        "price": 199,
-        "name": "田庄花生糖",
-        "pid": "TWP11"
-      },
-      "B": {
-        "origin": "未標示",
-        "made": "台灣",
-        "packed": "未標示",
-        "brand": "台灣",
-        "price": 159,
-        "name": "田庄花生糖",
-        "pid": "TWP12"
-      }
-    },
-    {
-      "task": 7,
-      "A": {
-        "origin": "印度",
         "made": "印度",
         "packed": "台灣",
         "brand": "台灣",
@@ -153,15 +27,78 @@ window.SURVEY_DATA = {
       }
     },
     {
-      "task": 8,
+      "task": 2,
       "A": {
-        "origin": "中國",
+        "origin": "未標示",
+        "made": "中國",
+        "packed": "台灣",
+        "brand": "未標示",
+        "price": 199,
+        "name": "田庄花生糖",
+        "pid": "TWP08"
+      },
+      "B": {
+        "origin": "台灣",
         "made": "台灣",
-        "packed": "印度",
+        "packed": "日本",
         "brand": "台灣",
+        "price": 199,
+        "name": "田庄花生糖",
+        "pid": "TWP03"
+      }
+    },
+    {
+      "task": 3,
+      "A": {
+        "origin": "未標示",
+        "made": "日本",
+        "packed": "台灣",
+        "brand": "台灣",
+        "price": 119,
+        "name": "田庄花生糖",
+        "pid": "TWP07"
+      },
+      "B": {
+        "origin": "日本",
+        "made": "印度",
+        "packed": "台灣",
+        "brand": "未標示",
         "price": 79,
         "name": "田庄花生糖",
-        "pid": "TWP15"
+        "pid": "TWP09"
+      }
+    },
+    {
+      "task": 4,
+      "A": {
+        "origin": "未標示",
+        "made": "台灣",
+        "packed": "未標示",
+        "brand": "台灣",
+        "price": 159,
+        "name": "田庄花生糖",
+        "pid": "TWP12"
+      },
+      "B": {
+        "origin": "台灣",
+        "made": "台灣",
+        "packed": "台灣",
+        "brand": "未標示",
+        "price": 119,
+        "name": "田庄花生糖",
+        "pid": "TWP04"
+      }
+    },
+    {
+      "task": 5,
+      "A": {
+        "origin": "日本",
+        "made": "台灣",
+        "packed": "台灣",
+        "brand": "台灣",
+        "price": 159,
+        "name": "田庄花生糖",
+        "pid": "TWP05"
       },
       "B": {
         "origin": "印度",
@@ -174,8 +111,80 @@ window.SURVEY_DATA = {
       }
     },
     {
+      "task": 6,
+      "A": {
+        "origin": "台灣",
+        "made": "中國",
+        "packed": "台灣",
+        "brand": "台灣",
+        "price": 79,
+        "name": "田庄花生糖",
+        "pid": "TWP10"
+      },
+      "B": {
+        "origin": "日本",
+        "made": "台灣",
+        "packed": "中國",
+        "brand": "台灣",
+        "price": 119,
+        "name": "田庄花生糖",
+        "pid": "TWP02"
+      }
+    },
+    {
+      "task": 7,
+      "A": {
+        "origin": "印度",
+        "made": "台灣",
+        "packed": "未標示",
+        "brand": "未標示",
+        "price": 119,
+        "name": "田庄花生糖",
+        "pid": "TWP01"
+      },
+      "B": {
+        "origin": "日本",
+        "made": "台灣",
+        "packed": "印度",
+        "brand": "未標示",
+        "price": 199,
+        "name": "田庄花生糖",
+        "pid": "TWP11"
+      }
+    },
+    {
+      "task": 8,
+      "A": {
+        "origin": "印度",
+        "made": "未標示",
+        "packed": "台灣",
+        "brand": "台灣",
+        "price": 159,
+        "name": "田庄花生糖",
+        "pid": "TWP06"
+      },
+      "B": {
+        "origin": "中國",
+        "made": "台灣",
+        "packed": "中國",
+        "brand": "未標示",
+        "price": 199,
+        "name": "田庄花生糖",
+        "pid": "TWP19"
+      }
+    },
+    {
       "task": 9,
       "A": {
+        "origin": "中國",
+        "made": "未標示",
+        "packed": "台灣",
+        "brand": "未標示",
+        "price": 159,
+        "name": "田庄花生糖",
+        "pid": "TWP20"
+      },
+      "B": {
         "origin": "台灣",
         "made": "日本",
         "packed": "台灣",
@@ -183,6 +192,18 @@ window.SURVEY_DATA = {
         "price": 199,
         "name": "田庄花生糖",
         "pid": "TWP17"
+      }
+    },
+    {
+      "task": 10,
+      "A": {
+        "origin": "中國",
+        "made": "台灣",
+        "packed": "印度",
+        "brand": "台灣",
+        "price": 79,
+        "name": "田庄花生糖",
+        "pid": "TWP15"
       },
       "B": {
         "origin": "未標示",
@@ -193,238 +214,217 @@ window.SURVEY_DATA = {
         "name": "田庄花生糖",
         "pid": "TWP18"
       }
-    },
-    {
-      "task": 10,
-      "A": {
-        "origin": "中國",
-        "made": "台灣",
-        "packed": "中國",
-        "brand": "未標示",
-        "price": 199,
-        "name": "田庄花生糖",
-        "pid": "TWP19"
-      },
-      "B": {
-        "origin": "中國",
-        "made": "未標示",
-        "packed": "台灣",
-        "brand": "未標示",
-        "price": 159,
-        "name": "田庄花生糖",
-        "pid": "TWP20"
-      }
     }
   ],
   "JP": [
     {
       "task": 1,
       "A": {
-        "origin": "日本",
+        "origin": "印度",
         "made": "日本",
-        "packed": "印度",
-        "brand": "印度",
-        "price": 119,
+        "packed": "日本",
+        "brand": "日本",
+        "price": 79,
         "name": "まめ堂花生糖",
-        "pid": "JPP01"
+        "pid": "JPP10"
       },
       "B": {
-        "origin": "台灣",
-        "made": "日本",
-        "packed": "中國",
+        "origin": "未標示",
+        "made": "印度",
+        "packed": "日本",
         "brand": "印度",
-        "price": 119,
+        "price": 199,
         "name": "まめ堂花生糖",
-        "pid": "JPP02"
+        "pid": "JPP05"
       }
     },
     {
       "task": 2,
       "A": {
-        "origin": "未標示",
-        "made": "印度",
+        "origin": "印度",
+        "made": "中國",
         "packed": "日本",
-        "brand": "未標示",
-        "price": 159,
+        "brand": "台灣",
+        "price": 79,
         "name": "まめ堂花生糖",
-        "pid": "JPP03"
+        "pid": "JPP19"
       },
       "B": {
-        "origin": "印度",
-        "made": "日本",
-        "packed": "中國",
-        "brand": "未標示",
-        "price": 159,
+        "origin": "中國",
+        "made": "未標示",
+        "packed": "日本",
+        "brand": "中國",
+        "price": 199,
         "name": "まめ堂花生糖",
-        "pid": "JPP04"
+        "pid": "JPP02"
       }
     },
     {
       "task": 3,
       "A": {
+        "origin": "未標示",
+        "made": "中國",
+        "packed": "台灣",
+        "brand": "日本",
+        "price": 79,
+        "name": "まめ堂花生糖",
+        "pid": "JPP09"
+      },
+      "B": {
         "origin": "印度",
         "made": "日本",
         "packed": "印度",
-        "brand": "台灣",
-        "price": 119,
+        "brand": "印度",
+        "price": 159,
         "name": "まめ堂花生糖",
-        "pid": "JPP05"
-      },
-      "B": {
-        "origin": "中國",
-        "made": "日本",
-        "packed": "未標示",
-        "brand": "未標示",
-        "price": 79,
-        "name": "まめ堂花生糖",
-        "pid": "JPP06"
+        "pid": "JPP20"
       }
     },
     {
       "task": 4,
       "A": {
         "origin": "台灣",
-        "made": "台灣",
-        "packed": "台灣",
+        "made": "印度",
+        "packed": "未標示",
         "brand": "日本",
         "price": 119,
         "name": "まめ堂花生糖",
-        "pid": "JPP07"
+        "pid": "JPP11"
       },
       "B": {
-        "origin": "中國",
-        "made": "日本",
+        "origin": "印度",
+        "made": "未標示",
         "packed": "日本",
-        "brand": "日本",
-        "price": 199,
+        "brand": "未標示",
+        "price": 79,
         "name": "まめ堂花生糖",
-        "pid": "JPP08"
+        "pid": "JPP18"
       }
     },
     {
       "task": 5,
       "A": {
-        "origin": "印度",
-        "made": "印度",
-        "packed": "未標示",
-        "brand": "日本",
-        "price": 159,
-        "name": "まめ堂花生糖",
-        "pid": "JPP09"
-      },
-      "B": {
         "origin": "未標示",
         "made": "日本",
-        "packed": "台灣",
-        "brand": "中國",
-        "price": 79,
+        "packed": "印度",
+        "brand": "台灣",
+        "price": 159,
         "name": "まめ堂花生糖",
-        "pid": "JPP10"
+        "pid": "JPP04"
+      },
+      "B": {
+        "origin": "印度",
+        "made": "日本",
+        "packed": "未標示",
+        "brand": "中國",
+        "price": 199,
+        "name": "まめ堂花生糖",
+        "pid": "JPP01"
       }
     },
     {
       "task": 6,
       "A": {
-        "origin": "日本",
-        "made": "印度",
-        "packed": "日本",
-        "brand": "台灣",
-        "price": 79,
-        "name": "まめ堂花生糖",
-        "pid": "JPP11"
-      },
-      "B": {
         "origin": "中國",
-        "made": "中國",
+        "made": "印度",
         "packed": "印度",
         "brand": "日本",
-        "price": 199,
+        "price": 119,
         "name": "まめ堂花生糖",
-        "pid": "JPP12"
+        "pid": "JPP14"
+      },
+      "B": {
+        "origin": "台灣",
+        "made": "未標示",
+        "packed": "中國",
+        "brand": "日本",
+        "price": 159,
+        "name": "まめ堂花生糖",
+        "pid": "JPP07"
       }
     },
     {
       "task": 7,
       "A": {
         "origin": "日本",
-        "made": "日本",
-        "packed": "中國",
-        "brand": "中國",
-        "price": 159,
-        "name": "まめ堂花生糖",
-        "pid": "JPP13"
-      },
-      "B": {
-        "origin": "日本",
-        "made": "中國",
+        "made": "台灣",
         "packed": "未標示",
         "brand": "日本",
-        "price": 79,
+        "price": 199,
         "name": "まめ堂花生糖",
-        "pid": "JPP14"
+        "pid": "JPP08"
+      },
+      "B": {
+        "origin": "台灣",
+        "made": "中國",
+        "packed": "日本",
+        "brand": "未標示",
+        "price": 199,
+        "name": "まめ堂花生糖",
+        "pid": "JPP06"
       }
     },
     {
       "task": 8,
       "A": {
-        "origin": "未標示",
-        "made": "未標示",
-        "packed": "中國",
+        "origin": "日本",
+        "made": "中國",
+        "packed": "印度",
         "brand": "日本",
-        "price": 79,
+        "price": 119,
         "name": "まめ堂花生糖",
-        "pid": "JPP15"
+        "pid": "JPP16"
       },
       "B": {
         "origin": "中國",
-        "made": "未標示",
+        "made": "台灣",
         "packed": "台灣",
         "brand": "日本",
-        "price": 199,
+        "price": 159,
         "name": "まめ堂花生糖",
-        "pid": "JPP16"
+        "pid": "JPP12"
       }
     },
     {
       "task": 9,
       "A": {
-        "origin": "台灣",
-        "made": "未標示",
-        "packed": "日本",
-        "brand": "中國",
-        "price": 199,
+        "origin": "日本",
+        "made": "日本",
+        "packed": "台灣",
+        "brand": "台灣",
+        "price": 159,
         "name": "まめ堂花生糖",
-        "pid": "JPP17"
+        "pid": "JPP03"
       },
       "B": {
-        "origin": "未標示",
+        "origin": "中國",
         "made": "日本",
         "packed": "未標示",
-        "brand": "台灣",
-        "price": 199,
+        "brand": "印度",
+        "price": 119,
         "name": "まめ堂花生糖",
-        "pid": "JPP18"
+        "pid": "JPP15"
       }
     },
     {
       "task": 10,
       "A": {
-        "origin": "中國",
+        "origin": "台灣",
         "made": "台灣",
         "packed": "日本",
         "brand": "中國",
-        "price": 159,
+        "price": 79,
         "name": "まめ堂花生糖",
-        "pid": "JPP19"
+        "pid": "JPP13"
       },
       "B": {
         "origin": "印度",
-        "made": "中國",
-        "packed": "日本",
-        "brand": "印度",
+        "made": "日本",
+        "packed": "中國",
+        "brand": "未標示",
         "price": 119,
         "name": "まめ堂花生糖",
-        "pid": "JPP20"
+        "pid": "JPP17"
       }
     }
   ]
