@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>花生糖產地標示調查</title>
+<style>
+  :root{
+    --peanut:#8B5A2B; --gold:#D4A24E; --paper:#FAF6EF; --ink:#2A2018; --ink-soft:#6B5D4E;
+    --tw:#C1272D; --import:#4A6B7C; --none:#B5701E; --ground:#EFE7DA; --card:#fff; --edge:#E3D6C4;
+    --accent:#C88A3A; --shadow:rgba(74,52,30,.14);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",-apple-system,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:680px;margin:0 auto;padding:26px 18px 70px;}
+  .screen{display:none;} .screen.active{display:block;}
+  h1{font-size:22px;margin:0 0 12px;line-height:1.3;text-wrap:balance;}
+  h2{font-size:18px;margin:0 0 10px;}
+  p{margin:0 0 12px;}
+  .muted{color:var(--ink-soft);font-size:14px;}
+  .btn{background:var(--peanut);color:#fff;border:none;border-radius:9px;
+    padding:13px 26px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .btn:disabled{opacity:.45;cursor:not-allowed;}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .center{text-align:center;margin-top:22px;}
+  .signature{margin-top:26px;color:var(--ink-soft);font-size:13px;text-align:right;}
+  .card-intro{background:var(--card);border:1px solid var(--edge);border-radius:12px;padding:22px;}
+
+  .prog{height:5px;background:var(--edge);border-radius:3px;margin:0 0 6px;overflow:hidden;}
+  .prog>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s;}
+  .qno{font-size:13px;color:var(--ink-soft);margin-bottom:10px;font-variant-numeric:tabular-nums;}
+  .prompt{font-size:16px;font-weight:600;margin:0 0 16px;}
+
+  /* 上下比較 */
+  .pair{display:flex;flex-direction:column;gap:14px;}
+  .opt{background:var(--card);border:2px solid var(--edge);border-radius:12px;padding:16px 16px 14px;
+    cursor:pointer;transition:border-color .15s,box-shadow .15s;box-shadow:0 2px 8px var(--shadow);}
+  .opt:hover{border-color:var(--gold);}
+  .opt.sel{border-color:var(--peanut);box-shadow:0 4px 14px var(--shadow);}
+  .opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .opt-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;gap:10px;}
+  .opt-tag{font-size:12px;font-weight:800;color:#fff;background:var(--accent);border-radius:5px;padding:2px 10px;}
+  .opt-name{font-size:15px;font-weight:800;}
+  .opt-claim{font-size:12px;color:var(--tw);font-weight:700;}
+  .opt-claim.jp{color:var(--import);}
+
+  /* 供應鏈流程圖 */
+  .chain{display:flex;align-items:stretch;gap:0;margin-bottom:12px;}
+  .step{flex:1;text-align:center;padding:8px 2px;border-radius:8px;position:relative;background:var(--ground);}
+  .step+.step{margin-left:15px;}
+  .step+.step::before{content:"▸";position:absolute;left:-12px;top:50%;transform:translateY(-50%);
+    color:var(--peanut);font-size:14px;font-weight:700;}
+  .step .ic{font-size:18px;}
+  .step .lb{font-size:10px;color:var(--ink-soft);margin-top:2px;letter-spacing:.03em;}
+  .step .co{font-size:13px;font-weight:800;margin-top:1px;}
+  .step.tw{background:color-mix(in srgb,var(--tw) 13%,var(--ground));}
+  .step.tw .co{color:var(--tw);}
+  .step.import{background:color-mix(in srgb,var(--import) 15%,var(--ground));}
+  .step.import .co{color:var(--import);}
+  .step.none{background:color-mix(in srgb,var(--none) 16%,var(--ground));}
+  .step.none .co{color:var(--none);}
+
+  .other{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-soft);
+    border-top:1px dashed var(--edge);padding-top:10px;}
+  .other b{color:var(--ink);}
+  .price{font-size:18px;font-weight:800;color:var(--peanut);font-variant-numeric:tabular-nums;}
+
+  .cd{text-align:center;font-size:13px;color:var(--none);margin-top:12px;min-height:20px;font-weight:600;}
+  .task.locked .opt{cursor:not-allowed;opacity:.72;}
+
+  @keyframes trapBlink{0%,49%{background:#ffe08a;}50%,100%{background:#ffd24d;}}
+  .trap-blink{animation:trapBlink .7s steps(1) infinite;border:2px solid #f1c40f;
+    display:inline-block;padding:8px 14px;border-radius:8px;font-weight:700;}
+  @media (prefers-reduced-motion: reduce){ .trap-blink{animation:none;} }
+
+  /* 量表 / 選項題 */
+  .qblock{background:var(--card);border:1px solid var(--edge);border-radius:10px;padding:16px;margin-bottom:12px;}
+  .qtext{font-weight:600;margin-bottom:10px;}
+  .likert{display:flex;gap:6px;}
+  .likert label{flex:1;text-align:center;font-size:12px;cursor:pointer;}
+  .likert input{display:block;margin:0 auto 4px;}
+  .likert .anchor{color:var(--ink-soft);}
+  .opts-inline{display:flex;flex-wrap:wrap;gap:8px;}
+  .opts-inline label{border:1.5px solid var(--edge);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:14px;}
+  .opts-inline input{margin-right:6px;}
+  .opts-inline input:checked+span{font-weight:700;}
+
+  #errbox{display:none;background:#fdecea;color:#9a2b1f;border:1px solid #e6a99f;
+    border-radius:8px;padding:12px;margin:14px 0;font-size:13px;white-space:pre-wrap;}
+
+  @media (prefers-color-scheme: dark){
+    :root{--paper:#F3ECE0;--ink:#EDE4D6;--ink-soft:#B7A891;--ground:#1C1712;--card:#26201A;
+      --edge:#3A3128;--shadow:rgba(0,0,0,.4);--tw:#E67479;--import:#8FB3C4;--none:#D69A4E;--peanut:#C9945A;}
+  }
+  :root[data-theme="dark"]{--paper:#F3ECE0;--ink:#EDE4D6;--ink-soft:#B7A891;--ground:#1C1712;
+    --card:#26201A;--edge:#3A3128;--shadow:rgba(0,0,0,.4);--tw:#E67479;--import:#8FB3C4;--none:#D69A4E;--peanut:#C9945A;}
+  :root[data-theme="light"]{--paper:#FAF6EF;--ink:#2A2018;--ink-soft:#6B5D4E;--ground:#EFE7DA;
+    --card:#fff;--edge:#E3D6C4;--shadow:rgba(74,52,30,.14);--tw:#C1272D;--import:#4A6B7C;--none:#B5701E;--peanut:#8B5A2B;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="s-intro" class="screen active">
+    <div class="card-intro">
+      <h1>花生糖產地標示調查</h1>
+      <p>謝謝您參與這份研究。我們想了解<b>消費者在選購花生糖時，如何看待包裝上的產地標示</b>。</p>
+      <p class="muted">問卷分兩個部分，各會呈現幾組花生糖讓您比較，並請您<b>推測一般消費者會選擇哪一款</b>。之後有幾題簡短的態度問題。全程約 5–7 分鐘，答案沒有對錯，也不會蒐集您的身分資料。</p>
+      <div class="center"><button class="btn" id="start">開始作答</button></div>
+      <div class="signature" id="sig-intro"></div>
+    </div>
+  </section>
+
+  <section id="s-comp" class="screen">
+    <h2 id="comp-q"></h2>
+    <p class="muted">請依您的理解選擇，沒有標準答案。</p>
+    <div id="comp-opts" class="opts-inline" style="flex-direction:column;"></div>
+    <div class="center"><button class="btn" id="comp-next" disabled>下一步</button></div>
+  </section>
+
+  <section id="s-taskintro" class="screen">
+    <h2 id="ti-title"></h2>
+    <p id="ti-body" class="muted"></p>
+    <div class="card-intro" style="margin-top:6px;">
+      <p class="muted" style="margin:0 0 10px;">供應鏈的四個環節會像這樣呈現，每個環節標出來自哪裡：</p>
+      <div id="ti-demo"></div>
+      <p class="muted" style="margin:12px 0 0;font-size:12px;">
+        <span style="color:var(--tw);font-weight:700;">紅＝台灣</span>
+        <span style="color:var(--import);font-weight:700;">藍＝進口</span>
+        <span style="color:var(--none);font-weight:700;">橘＝未標示</span>
+      </p>
+    </div>
+    <div class="center"><button class="btn" id="ti-next">開始比較</button></div>
+  </section>
+
+  <section id="s-task" class="screen">
+    <div class="prog"><i id="prog"></i></div>
+    <div class="qno" id="qno"></div>
+    <div class="prompt" id="prompt"></div>
+    <div class="pair task" id="task"></div>
+    <div class="cd" id="cd"></div>
+  </section>
+
+  <section id="s-survey" class="screen">
+    <h2>最後幾個問題</h2>
+    <p class="muted">請依您的實際想法作答。</p>
+    <div id="scales"></div>
+    <div id="demo"></div>
+    <div id="errbox"></div>
+    <div class="center"><button class="btn" id="submit">送出問卷</button></div>
+  </section>
+
+  <section id="s-done" class="screen">
+    <h2>完成，謝謝您！</h2>
+    <p>您的回覆已送出。感謝您撥空協助這份研究。</p>
+    <div id="dl-fallback"></div>
+    <div class="signature" id="sig-done"></div>
+  </section>
+
+</div>
+
+<script src="config.js"></script>
+<script src="survey_data.js"></script>
+<script>
+const C = window.FO_CONFIG;
+const D = window.SURVEY_DATA;
+const $ = s => document.querySelector(s);
+const rnd = n => Math.floor(Math.random()*n);
+const b01 = v => v===true?1 : v===false?0 : (v==null?'':v);
+function shuffled(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; }
+const show = id => { document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
+  $('#'+id).classList.add('active'); window.scrollTo(0,0); };
+
+$('#sig-intro').textContent = C.researcher;
+$('#sig-done').textContent = C.researcher;
+
+const STATE = {
+  pid: 'p'+Date.now().toString(36)+rnd(1e6).toString(36),
+  startedAt: new Date().toISOString(),
+  order: shuffled(C.scenarios),   // 情境呈現順序 counterbalance
+  comp: '',                       // 理解題答案
+  responses: [],                  // 每題選擇
+  traps: [], repeats: [],
+  sideCount: { TW:{A:0,B:0}, JP:{A:0,B:0} },
+  survey: {}, demo: {},
+  taskStart: 0,
+};
+
+// 供應鏈流程圖 render
+function chainHTML(prof){
+  let h = '<div class="chain">';
+  C.chainSteps.forEach(s=>{
+    const co = prof[s.key];
+    const cls = C.countryClass[co] || 'none';
+    h += `<div class="step ${cls}"><div class="ic">${s.icon}</div><div class="lb">${s.label}</div><div class="co">${co}</div></div>`;
+  });
+  h += '</div>';
+  return h;
+}
+function otherHTML(prof){
+  const bits = [];
+  bits.push(`<span>認證：<b>${prof.cert}</b></span>`);
+  bits.push(`<span>可查證：<b>${prof.verify}</b></span>`);
+  bits.push(`<span class="price">NT$${prof.price}</span>`);
+  return `<div class="other">${bits.join('')}</div>`;
+}
+function cardHTML(tag, name, claim, cls, prof){
+  return `<div class="opt" tabindex="0" role="button">
+    <div class="opt-head">
+      <span><span class="opt-tag">${tag}</span> <span class="opt-name">${name}</span></span>
+      <span class="opt-claim ${cls}">宣稱「${claim}」</span>
+    </div>
+    ${chainHTML(prof)}
+    ${otherHTML(prof)}
+  </div>`;
+}
+
+// 建每情境的呈現序列：14 trial + 1 trap（第1題後）+ 1 鏡像 repeat（中後段）
+function buildSeq(tasks){
+  const n = tasks.length;
+  const seq = [];
+  const repSrc = n>=3 ? (1+rnd(n-2)) : Math.max(0,n-1);   // 避開第1題
+  for(let i=0;i<n;i++){
+    seq.push({kind:'trial', i});
+    if(i===0) seq.push({kind:'trap'});
+    if(i===Math.min(n-1, repSrc+2)) seq.push({kind:'repeat', of:repSrc});
+  }
+  if(!seq.some(x=>x.kind==='repeat')) seq.push({kind:'repeat', of:repSrc});
+  return seq;
+}
+function mirror(t){ return {A:t.B, B:t.A}; }   // 上下對調（比選到哪款，不比位置）
+
+// 最短停留：鎖 minAnswerSec 秒，倒數結束才能選。trap 不鎖（需即時反應）。
+function armPicks(onPick, lock){
+  const task = $('#task'), cd = $('#cd');
+  const opts = task.querySelectorAll('.opt');
+  const sec = lock ? (C.minAnswerSec||0) : 0;
+  if(sec>0){
+    task.classList.add('locked');
+    let remain = sec;
+    cd.textContent = `請先閱讀，${remain} 秒後可選擇`;
+    const iv = setInterval(()=>{ remain--; if(remain>0){ cd.textContent=`請先閱讀，${remain} 秒後可選擇`; }
+      else { clearInterval(iv); cd.textContent=''; task.classList.remove('locked');
+        opts.forEach((o,i)=>{ o.onclick=()=>onPick(i===0?'A':'B'); o.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();onPick(i===0?'A':'B');}}; }); } }, 1000);
+  } else {
+    cd.textContent='';
+    opts.forEach((o,i)=>{ o.onclick=()=>onPick(i===0?'A':'B'); o.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();onPick(i===0?'A':'B');}}; });
+  }
+}
+
+// ── 情境流程 ──
+let curScen=0, curSeqIdx=0, curSeq=[], curTasks=[];
+
+function startScenario(){
+  const tag = STATE.order[curScen];
+  curTasks = D[tag];
+  curSeq = buildSeq(curTasks);
+  curSeqIdx = 0;
+  // 過場頁
+  $('#ti-title').textContent = `第 ${curScen+1} 部分：${C.scenarioTitle[tag]}`;
+  $('#ti-body').innerHTML = C.scenarioPrompt[tag] + '　每組請推測一般消費者會買哪一款。';
+  const demo = curTasks[0].A;
+  $('#ti-demo').innerHTML = chainHTML(demo);
+  show('s-taskintro');
+  $('#ti-next').onclick = ()=>{ show('s-task'); renderTask(); };
+}
+
+function renderTask(){
+  const tag = STATE.order[curScen];
+  const item = curSeq[curSeqIdx];
+  const claimText = D.claims[tag];
+  const cls = tag==='JP' ? 'jp' : '';
+  // 進度
+  const totalTrials = curTasks.length;
+  const doneTrials = curSeq.slice(0,curSeqIdx+1).filter(x=>x.kind==='trial').length;
+  $('#prog').style.width = (100*(curSeqIdx+1)/curSeq.length)+'%';
+
+  if(item.kind==='trap'){
+    $('#qno').textContent = `第 ${curScen+1} 部分`;
+    $('#prompt').innerHTML = `<span class="trap-blink">注意力確認：請直接點選下方標示「${C.trapSide[tag]}」的那一款</span>`;
+    const t = curTasks[0];
+    $('#task').innerHTML = cardHTML('A', D[tag][0].A.name, claimText, cls, t.A)
+                         + cardHTML('B', D[tag][0].B.name, claimText, cls, t.B);
+    STATE.taskStart = Date.now();
+    armPicks(onPick, false);   // trap 不鎖秒
+    return;
+  }
+  const t = (item.kind==='repeat') ? mirror(curTasks[item.of]) : curTasks[item.i];
+  $('#qno').textContent = `第 ${curScen+1} 部分 · 第 ${doneTrials} / ${totalTrials} 組`;
+  $('#prompt').innerHTML = C.scenarioPrompt[tag];
+  $('#task').innerHTML = cardHTML('A', t.A.name, claimText, cls, t.A)
+                       + cardHTML('B', t.B.name, claimText, cls, t.B);
+  STATE.taskStart = Date.now();
+  armPicks(onPick, true);
+}
+
+function onPick(side){
+  const tag = STATE.order[curScen];
+  const item = curSeq[curSeqIdx];
+  const rtMs = Date.now()-STATE.taskStart;
+  // 視覺選中
+  const opts = $('#task').querySelectorAll('.opt');
+  opts.forEach((o,i)=>o.classList.toggle('sel', (i===0?'A':'B')===side));
+  STATE.sideCount[tag][side]++;
+
+  if(item.kind==='trap'){
+    STATE.traps.push({scen:tag, side, expect:C.trapSide[tag], pass:side===C.trapSide[tag], rtMs});
+  } else if(item.kind==='repeat'){
+    // 鏡像：現在選的「款」對回原題。原題 t，mirror 後 A=原B。選 A → 選到原B款。
+    const origChoice = STATE.responses.find(r=>r.scen===tag && r.task===item.of+1 && !r.isRepeat);
+    const nowCard = (side==='A') ? 'B' : 'A';   // 鏡像下選A=原B款
+    const consistent = origChoice ? (origChoice.side===nowCard) : null;
+    STATE.repeats.push({scen:tag, of:item.of+1, orig:origChoice?origChoice.side:'', again:nowCard, consistent, rtMs});
+  } else {
+    const t = curTasks[item.i];
+    STATE.responses.push({scen:tag, task:item.i+1, side, rtMs, isRepeat:false,
+      A:t.A, B:t.B, pidA:t.A.pid, pidB:t.B.pid});
+  }
+  // 下一步（短延遲讓選中態可見）
+  setTimeout(()=>{
+    curSeqIdx++;
+    if(curSeqIdx < curSeq.length){ renderTask(); }
+    else { curScen++; if(curScen < STATE.order.length){ startScenario(); } else { renderSurvey(); } }
+  }, 180);
+}
+
+// ── 理解題 ──
+function renderComp(){
+  $('#comp-q').textContent = C.comprehension.q;
+  const box = $('#comp-opts'); box.innerHTML='';
+  C.comprehension.opts.forEach(o=>{
+    const lab = document.createElement('label');
+    lab.innerHTML = `<input type="radio" name="comp" value="${o.key}"><span>${o.text}</span>`;
+    box.appendChild(lab);
+  });
+  box.querySelectorAll('input').forEach(inp=>inp.onchange=()=>{ STATE.comp=inp.value; $('#comp-next').disabled=false; });
+  $('#comp-next').onclick = ()=>{ curScen=0; startScenario(); };
+}
+
+// ── 量表 + 人口 ──
+function renderSurvey(){
+  const sc = $('#scales'); sc.innerHTML='';
+  STATE.scaleOrder = shuffled(C.scales.map((s,i)=>i));
+  STATE.scaleOrder.forEach(idx=>{
+    const s = C.scales[idx];
+    const div = document.createElement('div'); div.className='qblock';
+    let h = `<div class="qtext">${s.text}</div><div class="likert">`;
+    C.scaleAnchors.forEach((a,v)=>{ h += `<label><input type="radio" name="sc_${s.key}" value="${v+1}"><span class="anchor">${a}</span></label>`; });
+    h += '</div>'; div.innerHTML=h; sc.appendChild(div);
+  });
+  const dm = $('#demo'); dm.innerHTML='';
+  C.demographics.forEach(d=>{
+    const div = document.createElement('div'); div.className='qblock';
+    let h = `<div class="qtext">${d.q}</div><div class="opts-inline">`;
+    d.opts.forEach(o=>{ h += `<label><input type="radio" name="dm_${d.key}" value="${o}"><span>${o}</span></label>`; });
+    h += '</div>'; div.innerHTML=h; dm.appendChild(div);
+  });
+  show('s-survey');
+}
+
+// ── flatten + 提交 ──
+function flatten(){
+  const f = {};
+  f.pid = STATE.pid; f.startedAt = STATE.startedAt; f.finishedAt = new Date().toISOString();
+  f.ua = navigator.userAgent;
+  f.scenarioOrder = STATE.order.join('>');
+  f.comprehension = STATE.comp;
+  f.minAnswerSec = C.minAnswerSec;
+
+  // 每題選擇（scen 前綴、四環節 + 其他屬性 A/B + 選了哪側 + rt）
+  STATE.responses.forEach(r=>{
+    const p = `${r.scen}_${r.task}`;
+    ['origin','made','packed','brand','price','verify','cert'].forEach(k=>{
+      f[`${p}_${k}A`] = r.A[k]; f[`${p}_${k}B`] = r.B[k];
+    });
+    f[`${p}_chosen`] = r.side;          // A=上 B=下
+    f[`${p}_rtMs`] = r.rtMs;
+    f[`${p}_pidA`] = r.pidA; f[`${p}_pidB`] = r.pidB;
+  });
+  // leftRatio → 這裡是 topRatio（上下比較，A=上）
+  C.scenarios.forEach(tag=>{
+    const c = STATE.sideCount[tag], tot=c.A+c.B;
+    f[`topRatio_${tag}`] = tot ? +(c.A/tot).toFixed(3) : '';
+  });
+  // trap
+  STATE.traps.forEach(t=>{ f[`trap_${t.scen}_side`]=t.side; f[`trap_${t.scen}_expect`]=t.expect;
+    f[`trap_${t.scen}_pass`]=b01(t.pass); f[`trap_${t.scen}_rtMs`]=t.rtMs; });
+  // repeat 一致性
+  STATE.repeats.forEach(r=>{ f[`rep_${r.scen}_of`]=r.of; f[`rep_${r.scen}_orig`]=r.orig;
+    f[`rep_${r.scen}_again`]=r.again; f[`rep_${r.scen}_consistent`]=b01(r.consistent); f[`rep_${r.scen}_rtMs`]=r.rtMs; });
+  // 量表
+  STATE.scaleOrder && (f.scaleOrder = STATE.scaleOrder.join('>'));
+  C.scales.forEach(s=>{ const el=document.querySelector(`input[name="sc_${s.key}"]:checked`); f[`q_${s.key}`]=el?el.value:''; });
+  // 人口
+  C.demographics.forEach(d=>{ const el=document.querySelector(`input[name="dm_${d.key}"]:checked`); f[`d_${d.key}`]=el?el.value:''; });
+  return f;
+}
+
+function downloadBackup(f){
+  const blob = new Blob([JSON.stringify(f,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download=`survey_${STATE.pid}.json`;
+  a.textContent = '⬇ 下載您的回覆備份（若上傳失敗請將此檔寄給研究者）';
+  a.className='btn'; a.style.display='inline-block'; a.style.marginTop='14px';
+  $('#dl-fallback').appendChild(a);
+}
+
+$('#submit').onclick = async ()=>{
+  // 基本完整度檢查
+  const missing = C.scales.filter(s=>!document.querySelector(`input[name="sc_${s.key}"]:checked`)).length
+                + C.demographics.filter(d=>!document.querySelector(`input[name="dm_${d.key}"]:checked`)).length;
+  if(missing>0){ $('#errbox').style.display='block'; $('#errbox').textContent=`還有 ${missing} 題未作答，請完成後再送出。`; window.scrollTo(0,document.body.scrollHeight); return; }
+  $('#submit').disabled = true; $('#errbox').style.display='none';
+  const f = flatten();
+  try{
+    const res = await fetch(C.endpoint, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(f)});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    show('s-done');
+  }catch(err){
+    show('s-done');
+    $('#dl-fallback').innerHTML = '<p class="muted">上傳時發生問題，但您的回覆已保存在本機。請下載備份並寄給研究者，非常感謝！</p>';
+    downloadBackup(f);
+    $('#errbox').textContent = String(err);
+  }
+};
+
+// 全域錯誤顯示
+window.addEventListener('error', e=>{ const b=$('#errbox'); if(b){ b.style.display='block'; b.textContent='發生錯誤：'+e.message; } });
+
+$('#start').onclick = ()=>{ show('s-comp'); renderComp(); };
+</script>
+</body>
+</html>
