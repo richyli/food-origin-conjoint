@@ -54,16 +54,6 @@ window.FO_CONFIG = {
   ],
   scaleAnchors: ['非常不同意', '不同意', '普通', '同意', '非常同意'],
 
-  // CBC 前的「產地：台灣」語意理解題（design_memo §5 全研究最有力描述統計）
-  comprehension: {
-    q: '你認為食品包裝上的「產地：台灣」，主要代表什麼？',
-    opts: [
-      { key: 'made', text: '在台灣加工／製造' },
-      { key: 'origin', text: '原料（如花生）產自台灣' },
-      { key: 'both', text: '兩者都是（原料和加工都在台灣）' },
-    ],
-  },
-
   // 人口變數
   demographics: [
     { key: 'sex', q: '生理性別', opts: ['女', '男', '不願透露'] },
