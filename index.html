@@ -40,11 +40,7 @@
   .opt:hover{border-color:var(--gold);}
   .opt.sel{border-color:var(--peanut);box-shadow:0 4px 14px var(--shadow);}
   .opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
-  .opt-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;gap:10px;}
-  .opt-tag{font-size:12px;font-weight:800;color:#fff;background:var(--accent);border-radius:5px;padding:2px 10px;}
-  .opt-name{font-size:15px;font-weight:800;}
-  .opt-claim{font-size:12px;color:var(--tw);font-weight:700;}
-  .opt-claim.jp{color:var(--import);}
+  .opt-tag{font-size:13px;font-weight:800;color:#fff;background:var(--accent);border-radius:5px;padding:3px 12px;}
 
   /* 供應鏈流程圖 */
   .chain{display:flex;align-items:stretch;gap:0;margin-bottom:12px;}
@@ -62,10 +58,9 @@
   .step.none{background:color-mix(in srgb,var(--none) 16%,var(--ground));}
   .step.none .co{color:var(--none);}
 
-  .other{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--ink-soft);
+  .other{display:flex;justify-content:space-between;align-items:center;font-size:13px;
     border-top:1px dashed var(--edge);padding-top:10px;}
-  .other b{color:var(--ink);}
-  .price{font-size:18px;font-weight:800;color:var(--peanut);font-variant-numeric:tabular-nums;}
+  .price{font-size:20px;font-weight:800;color:var(--peanut);font-variant-numeric:tabular-nums;}
 
   .cd{text-align:center;font-size:13px;color:var(--none);margin-top:12px;min-height:20px;font-weight:600;}
   .task.locked .opt{cursor:not-allowed;opacity:.72;}
@@ -199,21 +194,15 @@ function chainHTML(prof){
   h += '</div>';
   return h;
 }
-function otherHTML(prof){
-  const bits = [];
-  bits.push(`<span>認證：<b>${prof.cert}</b></span>`);
-  bits.push(`<span>可查證：<b>${prof.verify}</b></span>`);
-  bits.push(`<span class="price">NT$${prof.price}</span>`);
-  return `<div class="other">${bits.join('')}</div>`;
+function priceHTML(prof){
+  return `<div class="other"><span class="opt-tag">${prof._tag}</span><span class="price">NT$${prof.price}</span></div>`;
 }
-function cardHTML(tag, name, claim, cls, prof){
+// v04d：card 只留 A/B 標籤（在價格列左側）+ 供應鏈流程圖 + 價格。品牌名與宣稱已移到題幹。
+function cardHTML(tag, prof){
+  prof._tag = tag;
   return `<div class="opt" tabindex="0" role="button">
-    <div class="opt-head">
-      <span><span class="opt-tag">${tag}</span> <span class="opt-name">${name}</span></span>
-      <span class="opt-claim ${cls}">宣稱「${claim}」</span>
-    </div>
     ${chainHTML(prof)}
-    ${otherHTML(prof)}
+    ${priceHTML(prof)}
   </div>`;
 }
 
@@ -270,8 +259,6 @@ function startScenario(){
 function renderTask(){
   const tag = STATE.order[curScen];
   const item = curSeq[curSeqIdx];
-  const claimText = D.claims[tag];
-  const cls = tag==='JP' ? 'jp' : '';
   // 進度
   const totalTrials = curTasks.length;
   const doneTrials = curSeq.slice(0,curSeqIdx+1).filter(x=>x.kind==='trial').length;
@@ -281,8 +268,7 @@ function renderTask(){
     $('#qno').textContent = `第 ${curScen+1} 部分`;
     $('#prompt').innerHTML = `<span class="trap-blink">注意力確認：請直接點選下方標示「${C.trapSide[tag]}」的那一款</span>`;
     const t = curTasks[0];
-    $('#task').innerHTML = cardHTML('A', D[tag][0].A.name, claimText, cls, t.A)
-                         + cardHTML('B', D[tag][0].B.name, claimText, cls, t.B);
+    $('#task').innerHTML = cardHTML('A', t.A) + cardHTML('B', t.B);
     STATE.taskStart = Date.now();
     armPicks(onPick, false);   // trap 不鎖秒
     return;
@@ -290,8 +276,7 @@ function renderTask(){
   const t = (item.kind==='repeat') ? mirror(curTasks[item.of]) : curTasks[item.i];
   $('#qno').textContent = `第 ${curScen+1} 部分 · 第 ${doneTrials} / ${totalTrials} 組`;
   $('#prompt').innerHTML = C.scenarioPrompt[tag];
-  $('#task').innerHTML = cardHTML('A', t.A.name, claimText, cls, t.A)
-                       + cardHTML('B', t.B.name, claimText, cls, t.B);
+  $('#task').innerHTML = cardHTML('A', t.A) + cardHTML('B', t.B);
   STATE.taskStart = Date.now();
   armPicks(onPick, true);
 }
@@ -372,7 +357,7 @@ function flatten(){
   // 每題選擇（scen 前綴、四環節 + 其他屬性 A/B + 選了哪側 + rt）
   STATE.responses.forEach(r=>{
     const p = `${r.scen}_${r.task}`;
-    ['origin','made','packed','brand','price','verify','cert'].forEach(k=>{
+    ['origin','made','packed','brand','price'].forEach(k=>{
       f[`${p}_${k}A`] = r.A[k]; f[`${p}_${k}B`] = r.B[k];
     });
     f[`${p}_chosen`] = r.side;          // A=上 B=下
